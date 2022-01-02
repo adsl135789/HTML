@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <title>NCHU Cocktail Club</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+    body {
+      font-family: "Times New Roman", Georgia, Serif;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Playfair Display", Georgia, Serif;
+      letter-spacing: 5px;
+    }
+
+  </style>
+
+  <head>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      google.charts.load('current', {'packages':['corechart']});
+    	google.charts.setOnLoadCallback(init);
+
+    	function init() {
+    	  var url =
+    		'https://docs.google.com/spreadsheets/d/1vbSVsSua3fQUXJyK0E9_YbpK8gMyMvIkHm1EHlkbGsY/gviz/tq?sheet=工作表1';
+    	  var query = new google.visualization.Query(url);
+    	  query.setQuery('select *');
+    	  query.send(processSheetsData);
+    	}
+
+    	function processSheetsData(response) {
+    	  var data = response.getDataTable();
+    	  var columns = data.getNumberOfColumns();
+    	  var rows = data.getNumberOfRows();
+        var text='';
+        for(var r=0; r < rows; r++){
+          text += '<div class="w3-panel w3-border">';
+          text += '  <h3>Date: '+data.getFormattedValue(r,4)+'</h3>';
+          text += '  <h3>Number of people: '+data.getFormattedValue(r,3)+'</h3>';
+          text += '</div>';
+        }
+
+    	  document.getElementById("status_res").innerHTML = text;
+    	}
+
+  	</script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous">
+    </script>
+
+    <script>
+      function SubForm (){
+          $.ajax({
+              url:'https://api.apispreadsheets.com/data/MIaAOPc2aBMZtMLF/',
+              type:'post',
+              data:$("#reserForm").serializeArray(),
+              success: function(){
+                alert("Form Data Submitted :)")
+              },
+              error: function(){
+                alert("There was an error :(")
+              }
+          });
+      }
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:5px;">
+        <a href="/final.html" class="w3-bar-item w3-button">NCHU Cocktail Club & Liver House</a>
+        <!-- Right-sided navbar links. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+          <a href="/final.html#about" class="w3-bar-item w3-button">About</a>
+          <a href="/final.html#menu" class="w3-bar-item w3-button">Menu</a>
+          <a href="/final.html#Contact" class="w3-bar-item w3-button">Contact</a>
+          <a href="/final.html#Articles" class="w3-bar-item w3-button">Articles</a>
+          <a href="/reservation.html#Reservartion" class="w3-bar-item w3-button">Reservartion</a>
+          <a href="https://www.facebook.com/NCHUCocktail/" class="w3-bar-item w3-button" target="_blank">
+            <img src="pic/fb-final.png" style="width:25px;height:25px;">
+          </a>
+          <a href="https://www.instagram.com/nchucocktail/" class="w3-bar-item w3-button" target="_blank">
+            <img src="pic/ig-icon.png" style="width:25px;height:25px;">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w3-display-container w3-content w3-center w3-black" style="max-width:1500px;min-width:300px"; id="home">
+      <img class="w3-image" src="pic/liverhouse.jpg" alt="logo" style="height:800px">
+      <div class="w3-display-bottomleft w3-padding-24 w3-opacity">
+        <h4 class="w3-xxlarge w3-left" style="color:white">理性飲酒</h4>
+        <h4 class="w3-xxlarge " style="color:white">Drinking Wisely</h4>
+      </div>
+    </header>
+
+    <!-- reservation section -->
+    <div class="w3-content" style="max-width:1200px">
+      <div class="w3-container w3-padding-64" id="Reservartion">
+        <h1 class="w3-center">Reservartion</h1><br>
+        <form id="reserForm">
+          <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name" ></p>
+          <p><input class="w3-input w3-padding-16" type="text" placeholder="Phone" required name="Phone" ></p>
+          <p><input class="w3-input w3-padding-16" type="email" placeholder="Email" required name="Email" ></p>
+          <p><select class="w3-select" name="Number" placeholder="How many People" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select></p>
+          <p><input class="w3-input w3-padding-16" type="datetime-local" placeholder="Date and time" required name="Date"
+                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" value="2022-01-01T18:00" ></p>
+          <p><input class="w3-input w3-padding-16" type="text" placeholder="Message \ Special requirements" name="Message"></p>
+          <p><input class="w3-button w3-light-grey w3-section w3-right w3-large" onclick="SubForm()" type="button" value="Submit"></input></p>
+        </form>
+      </div>
+    </div>
+    <hr>
+    <div class="w3-content" style="max-width:1200px">
+      <div class="w3-container w3-padding-64" id="Reservartion">
+        <h1 class="w3-center">Reservartion Status</h1><br>
+        <div id='status_res'>
+        </div>
+      </div>
+    </div>
+
+    <footer class="w3-display-container w3-black" style="max-width:1600px;min-width:300px;height:100px" id="footer">
+      <img class="w3-display-middle w3-image w3-opacity" src="pic/liverhouse-logo.png" style="height:100px">
+    </footer>
+
+  </body>
+
+</html>
